@@ -5,6 +5,25 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:textViewStyle">@style/UbuntuTextViewStyle</item>
+        <item name="android:buttonStyle">@style/UbuntuButtonStyle</item>
+
+    </style>
+
+    <style name="TransparentToolbar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:windowActionBarOverlay">true</item>
+        <!-- Support Library compability -->
+        <item name="windowActionBarOverlay">true</item>
+    </style>
+
+
+    <style name="UbuntuTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/ubuntu_light</item>
+    </style>
+
+    <style name="UbuntuButtonStyle" parent="android:Widget.Holo.Button">
+        <item name="android:fontFamily">@font/ubuntu_light</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
