@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.daimajia.swipe.SwipeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipe"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/deleteLL"
+        android:tag="Bottom2"
+        android:background="@color/colorAccent"
+        android:layout_width="40dp"
+        android:gravity="center"
+        android:onClick="deleteBtn"
+        android:layout_height="120dp">
+        <ImageView
+            android:id="@+id/trash"
+            android:src="@drawable/trash"
+            android:layout_width="22dp"
+            android:layout_height="22dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:padding="10dp"
+        android:background="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FAF0E6"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/nameOfListTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ubuntu_light"
+            android:tag="Hover"
+            android:text="test_text\n"
+            android:textColor="#FAF0E6"
+            android:textSize="16sp" />
+    </LinearLayout>
+</com.daimajia.swipe.SwipeLayout>
