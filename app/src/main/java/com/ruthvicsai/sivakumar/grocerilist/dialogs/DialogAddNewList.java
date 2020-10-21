@@ -16,6 +16,7 @@ import androidx.fragment.app.DialogFragment;
 
 
 import com.ruthvicsai.sivakumar.grocerilist.R;
+import com.ruthvicsai.sivakumar.grocerilist.activites.ViewListsActivity;
 
 public class DialogAddNewList extends DialogFragment {
 

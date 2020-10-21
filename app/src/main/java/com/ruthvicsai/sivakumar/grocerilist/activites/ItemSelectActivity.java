@@ -19,6 +19,7 @@ import com.ecloud.pulltozoomview.PullToZoomScrollViewEx;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 import com.ruthvicsai.sivakumar.grocerilist.BarcodeItem;
+import com.ruthvicsai.sivakumar.grocerilist.FloatingActionButtonOriginal;
 import com.ruthvicsai.sivakumar.grocerilist.MainActivity;
 import com.ruthvicsai.sivakumar.grocerilist.R;
 import com.ruthvicsai.sivakumar.grocerilist.dialogs.DialogRenameItem;
@@ -275,7 +276,7 @@ public class ItemSelectActivity extends AppCompatActivity {
     private void setUpFab()
     {
         FloatingActionMenu actionMenu;
-        com.example.grocerilist12.FloatingActionButtonOriginal actionButton;
+        FloatingActionButtonOriginal actionButton;
 
 
         Drawable addNewListD = getResources().getDrawable( R.drawable.plus_with_border );
@@ -290,7 +291,7 @@ public class ItemSelectActivity extends AppCompatActivity {
 
 
 
-        actionButton = new com.example.grocerilist12.FloatingActionButtonOriginal.Builder(this)
+        actionButton = new FloatingActionButtonOriginal.Builder(this)
                 .setContentView(icon)
                 //.setTheme(0)
                 .build();

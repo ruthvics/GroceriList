@@ -1,14 +1,16 @@
 package com.ruthvicsai.sivakumar.grocerilist.activites;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.daimajia.swipe.util.Attributes;
@@ -20,145 +22,98 @@ import com.ruthvicsai.sivakumar.grocerilist.BarcodeItem;
 import com.ruthvicsai.sivakumar.grocerilist.FloatingActionButtonOriginal;
 import com.ruthvicsai.sivakumar.grocerilist.MainActivity;
 import com.ruthvicsai.sivakumar.grocerilist.R;
-import com.ruthvicsai.sivakumar.grocerilist.adapters.GridViewAdapter;
+import com.ruthvicsai.sivakumar.grocerilist.adapters.RecyclerViewAdapter;
+import com.ruthvicsai.sivakumar.grocerilist.dialogs.DialogAddNewList;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
-import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
-import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
+public class DisplayListActivity extends AppCompatActivity implements DialogAddNewList.OnInputListener {
 
-public class ViewListsActivity extends AppCompatActivity {
 
-    SubActionButton viewListsBtn, viewFavoritesBtn, homeBtn, settingsBtn;
-    private ArrayList<String> listOfData = new ArrayList<>();
-    //private String newName;
-    private GridViewAdapter mGridadapter;
-    private int tutorialID;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+
+    private String mListName;
+    private com.google.android.material.floatingactionbutton.FloatingActionButton addNewItem;
+    private ArrayList<BarcodeItem> mDataSet = new ArrayList<>();
+    private Context mContext  = this;
+    private int tutorialId;
+    SubActionButton viewListsBtn, viewFavoritesBtn, addNewListBtn, settingsBtn, homeBtn;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        loadData();
-        createFavorite();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_all_lists);
+        setContentView(R.layout.activity_recycler_view_display);
+
+
+
+        Intent displayList = getIntent();
+        mListName = displayList.getStringExtra("listName");
+
+        tutorialId = displayList.getIntExtra("tutorialId", 0);
+
+        setTitle(mListName + " List");
+
+        loadData(mListName);
 
         setUpFab();
         FabSubButtonOnCLick();
 
-        Intent mainIntent = getIntent();
-        tutorialID = mainIntent.getIntExtra("tutorialId", 0);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 
-        //setNames();
-        final GridView gridView = (GridView)findViewById(R.id.listGridView);
-        mGridadapter = new GridViewAdapter(this, listOfData, tutorialID);
-        mGridadapter.setMode(Attributes.Mode.Multiple);
-        gridView.setAdapter(mGridadapter);
-        gridView.setSelected(false);
+        }
 
-        //tutorial();
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                //Log.e("onItemClick","onItemClick:" + position);
+        if(mDataSet.size() == 0)
+        {
+            BarcodeItem exampleBI = new BarcodeItem("name", "123456789");
+            mDataSet.add(exampleBI);
+        }
 
-                Intent viewList = new Intent(getApplicationContext(), DisplayListActivity.class);
-                viewList.putExtra("listName", listOfData.get(position));
-                startActivity(viewList);
-                return false;
-            }
-        });
+        // Adapter:
+        mAdapter = new RecyclerViewAdapter(this, mDataSet, mListName, tutorialId);
+        ((RecyclerViewAdapter) mAdapter).setMode(Attributes.Mode.Single);
+        recyclerView.setAdapter(mAdapter);
+
+        saveData(mListName);
     }
 
-    private void saveData() {
+
+
+
+    private void saveData(String s) {
         SharedPreferences sharedPreferences = getSharedPreferences("shared", MODE_PRIVATE );
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
-        String json = gson.toJson(listOfData);
-        editor.putString("listOfData", json);
+        String json = gson.toJson(mDataSet);
+        editor.putString(s, json);
         editor.apply();
     }
 
-    private void loadData(){
-        SharedPreferences sharedPreferences = getSharedPreferences("shared", MODE_PRIVATE );
-        Gson gson = new Gson();
-        String json = sharedPreferences.getString("listOfData",null);
-        Type type = new TypeToken<ArrayList<String>>() {}.getType();
-        listOfData = gson.fromJson(json, type);
-
-        if(listOfData == null)
-        {
-            listOfData = new ArrayList<>();
-        }
-    }
-
-    void createFavorite()
-    {
-        if(listOfData.size() == 0) {
-            listOfData.add("Favorites");
-            addExampleItem("Favorites");
-        }
-    }
-
-    private void createNewList(String name)
-    {
-        listOfData.add(name);
-        saveData();
-    }
-
-    private void tutorial()
-    {
-        ShowcaseConfig config = new ShowcaseConfig();
-        config.setDelay(500); // half second between each showcase view
-
-        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(this/*, SHOWCASE_ID*/);
-        sequence.setConfig(config);
-        MaterialShowcaseView.Builder sequenceBuilderGoToList;
-
-        final int COLOR_MASK = getResources().getColor(R.color.colorAccentTransparent);
-        final int COLOR_DISMISS = getResources().getColor(R.color.colorPrimaryDark);
-
-        sequenceBuilderGoToList = new MaterialShowcaseView.Builder(this)
-                .setTarget(findViewById(R.id.nameOfListTextView))
-                .renderOverNavigationBar()
-                .setDismissOnTargetTouch(true)
-                .setTargetTouchable(true)
-                .setTitleText("Tips")
-                .setContentText("Tips will be displayed here")
-                .setDelay(100)
-                .withRectangleShape()
-                .setMaskColour(COLOR_MASK)
-                .setDismissTextColor(COLOR_DISMISS);
-
-        sequence.addSequenceItem(sequenceBuilderGoToList.build());
-        sequence.start();
-
-    }
-
-    private void addExampleItem(String s){
+    private void loadData(String s){
         SharedPreferences sharedPreferences = getSharedPreferences("shared", MODE_PRIVATE );
         Gson gson = new Gson();
         String json = sharedPreferences.getString(s,null);
         Type type = new TypeToken<ArrayList<BarcodeItem>>() {}.getType();
-        ArrayList<BarcodeItem> listTemp = gson.fromJson(json, type);
+        mDataSet = gson.fromJson(json, type);
 
-        if(listTemp == null)
+        if(mDataSet == null)
         {
-            listTemp = new ArrayList<>();
+            mDataSet = new ArrayList<>();
         }
+    }
 
-        BarcodeItem addExample = new BarcodeItem("name", "123456789");
-        listTemp.add(addExample);
+    @Override
+    public void sendInput(String input) {
+        BarcodeItem addToList = new BarcodeItem(input);
+        mDataSet.add(addToList);
+        saveData(mListName);
 
-        sharedPreferences = getSharedPreferences("shared", MODE_PRIVATE );
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        Gson gson2 = new Gson();
-        String json2 = gson2.toJson(listTemp);
-        editor.putString(s, json2);
-        editor.apply();
     }
 
     private void setUpFab()
@@ -212,15 +167,33 @@ public class ViewListsActivity extends AppCompatActivity {
         // addNewListBtn.setId(R.id.faButtonPlus);
         settingsBtn.setId(R.id.faSettingsButton);
         homeBtn.setId(R.id.faHomeButton);
+        if(mListName == null)
+        {
+            mListName = "example";
+        }
 
-        actionMenu = new FloatingActionMenu.Builder(this)
-                .addSubActionView(settingsBtn)
-                //.addSubActionView(addNewListBtn)
-                .addSubActionView(homeBtn)
-                .addSubActionView(viewListsBtn)
-                .addSubActionView(viewFavoritesBtn)
-                .attachTo(actionButton)
-                .build();
+        if(mListName.equals("Favorites"))
+        {
+            actionMenu = new FloatingActionMenu.Builder(this)
+                    .addSubActionView(settingsBtn)
+                    //.addSubActionView(addNewListBtn)
+                    .addSubActionView(viewListsBtn)
+                    .addSubActionView(homeBtn)
+                    //.addSubActionView(viewFavoritesBtn)
+                    .attachTo(actionButton)
+                    .build();
+        }
+        else {
+
+            actionMenu = new FloatingActionMenu.Builder(this)
+                    .addSubActionView(settingsBtn)
+                    //.addSubActionView(addNewListBtn)
+                    .addSubActionView(viewListsBtn)
+                    .addSubActionView(homeBtn)
+                    .addSubActionView(viewFavoritesBtn)
+                    .attachTo(actionButton)
+                    .build();
+        }
 
     }
 
@@ -270,6 +243,5 @@ public class ViewListsActivity extends AppCompatActivity {
             }
         });
     }
-
 
 }
