@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:icon">
+        android:debuggable="false"
+        tools:replace="android:icon"
+        tools:ignore="HardcodedDebugMode">
         <activity android:name=".activites.DetailsActivity"
             android:launchMode="singleInstance"></activity>
         <activity android:name=".activites.TutorialActivity"

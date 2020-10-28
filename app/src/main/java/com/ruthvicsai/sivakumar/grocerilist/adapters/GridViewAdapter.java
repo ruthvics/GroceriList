@@ -36,7 +36,6 @@ public class GridViewAdapter extends BaseSwipeAdapter {
         this.mContext = mContext;
         mListOfData = stringArrayList;
         tutorialID = stutorialID;
-       // this.itemListener = itemListenerM;
     }
 
 
@@ -50,15 +49,11 @@ public class GridViewAdapter extends BaseSwipeAdapter {
         View v = LayoutInflater.from(mContext).inflate(R.layout.grid_item, null);
         final GridView Gview = (GridView) v.findViewById(R.id.listGridView);
         LinearLayout deleteBtnGrid = (LinearLayout) v.findViewById(R.id.deleteLL);
-        //sendPosition.sendCurrentPosition(position)
-        // Log.e("PREonCLick", mListOfData.get(position));
 
         if(mListOfData.get(position).equals("Favorites"))
         {
             favView = v;
         }
-
-
 
         if(tutorialID == 3 && tutOnce == false) {
             tutorial();
@@ -71,11 +66,9 @@ public class GridViewAdapter extends BaseSwipeAdapter {
         deleteBtnGrid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Log.e("gridListView", "delete clicked");
                 if(!(mListOfData.get(position).equals("Favorites") ))
                 {
                     dPrintListData();
-                    //Log.e("onCLick", mListOfData.get(position));
                     mListOfData.remove(position);
                     notifyDataSetChanged();
                     mItemManger.closeAllItems();
@@ -84,7 +77,6 @@ public class GridViewAdapter extends BaseSwipeAdapter {
                 {
                     notifyDataSetChanged();
                     dPrintListData();
-                    //Log.e("onCLick", mListOfData.get(position) + "else:----" + position);
                     Toast.makeText(mContext, "Can not delete Favorite",
                             Toast.LENGTH_LONG).show();
                 }

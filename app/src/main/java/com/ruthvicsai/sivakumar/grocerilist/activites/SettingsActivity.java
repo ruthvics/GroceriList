@@ -132,7 +132,6 @@ public class SettingsActivity extends AppCompatActivity implements DialogReset.O
 
         actionMenu = new FloatingActionMenu.Builder(this)
                 .addSubActionView(settingsBtn)
-                //.addSubActionView(addNewListBtn)
                 .addSubActionView(homeBtn)
                 .addSubActionView(viewListsBtn)
                 .addSubActionView(viewFavoritesBtn)
@@ -167,23 +166,5 @@ public class SettingsActivity extends AppCompatActivity implements DialogReset.O
             }
         });
 
-        /*addNewListBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogAddNewList dialog = new DialogAddNewList();
-                dialog.show(getSupportFragmentManager(), "my");
-                //dataOfLists.add(newListString);
-
-                saveListsData();
-            }
-        });*/
-
-        /*settingsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent settingsAc = new Intent(getApplicationContext(), SettingsActivity.class);
-                startActivity(settingsAc);
-            }
-        });*/
     }
 }

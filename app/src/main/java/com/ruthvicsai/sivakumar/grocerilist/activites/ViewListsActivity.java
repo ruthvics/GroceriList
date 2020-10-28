@@ -174,7 +174,6 @@ public class ViewListsActivity extends AppCompatActivity {
         Drawable homeIconD = getResources().getDrawable(R.drawable.home_icon2);
 
         ImageView icon = new ImageView(this);
-        //icon.setImageResource(R.drawable.ic_foreground_192pxxxhdpi);
         icon.setImageResource(R.drawable.grocerilisticon13);
 
 
@@ -202,20 +201,17 @@ public class ViewListsActivity extends AppCompatActivity {
 
         viewListsBtn = itemBuilder.setContentView(viewListsIcon).build();
         viewFavoritesBtn = itemBuilder.setContentView(favoriteIcon).build();
-        //addNewListBtn = itemBuilder.setContentView(addNewListIcon).build();
         settingsBtn = itemBuilder.setContentView(settingsIcon).build();
         homeBtn = itemBuilder.setContentView(homeIcon).build();
 
         actionButton.setId(R.id.faButtonMain);
         viewListsBtn.setId(R.id.faButtonAllList);
         viewFavoritesBtn.setId(R.id.faButtonFavoriteList);
-        // addNewListBtn.setId(R.id.faButtonPlus);
         settingsBtn.setId(R.id.faSettingsButton);
         homeBtn.setId(R.id.faHomeButton);
 
         actionMenu = new FloatingActionMenu.Builder(this)
                 .addSubActionView(settingsBtn)
-                //.addSubActionView(addNewListBtn)
                 .addSubActionView(homeBtn)
                 .addSubActionView(viewListsBtn)
                 .addSubActionView(viewFavoritesBtn)
@@ -242,17 +238,6 @@ public class ViewListsActivity extends AppCompatActivity {
                 startActivity(goToActivity);
             }
         });
-
-        /*addNewListBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogAddNewList dialog = new DialogAddNewList();
-                dialog.show(getSupportFragmentManager(), "my");
-                //dataOfLists.add(newListString);
-
-                saveListsData();
-            }
-        });*/
 
         settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override

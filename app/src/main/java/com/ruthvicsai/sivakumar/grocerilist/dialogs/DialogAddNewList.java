@@ -27,12 +27,9 @@ public class DialogAddNewList extends DialogFragment {
     public interface OnInputListener{
         void sendInput(String input);
     }
-    //public interface notifyAdapter{
-    //    void updateAdapter();
-   // }
+
 
     public OnInputListener mOnInputListener;
-    //public notifyAdapter mNotifyAdapter;
 
     @Nullable
     @Override
@@ -76,7 +73,6 @@ public class DialogAddNewList extends DialogFragment {
         super.onAttach(context);
         try{
             mOnInputListener = (OnInputListener) getActivity();
-            //mNotifyAdapter = (notifyAdapter) getActivity();
         }catch(ClassCastException e)
         {
             //Log.e("onAttach", e.getMessage());
