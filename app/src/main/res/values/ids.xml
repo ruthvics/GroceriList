@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="faButtonMain" />
+    <item type="id" name="faButtonPlus" />
+    <item type="id" name="faButtonAllList" />
+    <item type="id" name="faButtonFavoriteList" />
+
+    <item type="id" name="favoriteGridView" />
+    <item type="id" name="faSettingsButton" />
+    <item type="id" name="faHomeButton" />
+
+
+</resources>

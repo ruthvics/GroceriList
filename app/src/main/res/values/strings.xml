@@ -2,6 +2,12 @@
     <string name="app_name">GroceriList</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
+
+    <string name="tip1String">Scan a Barcode or QR code to get started</string>
+    <string name="tip2String">You can add items used often to Favorites</string>
+    <string name="tip3String">Name your items to help identify them easier</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
